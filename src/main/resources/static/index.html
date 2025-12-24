@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakila API - Deployment Guide</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .step { margin-bottom: 30px; padding: 20px; border-left: 4px solid #3498db; background: #ebf5fb; }
+        code { background: #2c3e50; color: #ecf0f1; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        .endpoint-box { background: #27ae60; color: white; padding: 15px; border-radius: 5px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Sakila API Deployment Guide</h1>
+        <p>Welcome! This API is connected to a cloud MySQL database. Here is how we deployed it:</p>
+
+        <div class="step">
+            <h3>Step 1: Database Migration (Aiven)</h3>
+            <p>We exported the <strong>Sakila</strong> database from a local MySQL instance as a <code>.sql</code> file and imported it into an <strong>Aiven.io</strong> cloud instance.</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Environment Variables</h3>
+            <p>Instead of hardcoding passwords, we used variables in <code>application.properties</code>:</p>
+            <code>spring.datasource.url=${DB_HOST}...</code>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Dockerization</h3>
+            <p>Because Render doesn't support Java natively, we created a <code>Dockerfile</code> using <strong>Eclipse Temurin</strong> to package our Spring Boot app.</p>
+        </div>
+
+        <div class="step">
+            <h3>Step 4: Cloud Deployment (Render)</h3>
+            <p>We linked our GitHub repo to <strong>Render.com</strong>, set the runtime to <strong>Docker</strong>, and added our Aiven credentials as secret Environment Variables.</p>
+        </div>
+
+        <div class="endpoint-box">
+            <strong>Test the API:</strong> Try adding <code>/actors</code> to the end of this URL!
+        </div>
+    </div>
+</body>
+</html>
