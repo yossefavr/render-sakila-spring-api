@@ -1,0 +1,17 @@
+@startuml ManyToOne_Simple
+skinparam classIconBackgroundColor #ADD1B2
+skinparam classIconBorderColor #3F7E5E
+
+class Film {
+    -id: short
+    -title: String
+    -description: String
+}
+
+class Language {
+    -id: Integer
+    -name: String
+}
+
+Film "n" -- "1" Language : has language >
+@enduml

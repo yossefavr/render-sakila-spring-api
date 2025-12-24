@@ -1,0 +1,48 @@
+@startuml Sakila_Final_Final
+skinparam classIconBackgroundColor #ADD1B2
+skinparam classIconBorderColor #3F7E5E
+skinparam classAttributeIconSize 0
+
+' חבילה שמאלית - קוד
+package "Java Code (Logical Layer)" #E3F2FD {
+    class Film {
+        -id: short
+        -actors: List<Actor>
+    }
+    
+    class Actor {
+        -id: int
+        -films: List<Film>
+    }
+    
+    ' כיוון למטה כדי שיהיו אחד מעל השני
+    Film "m" <--> "n" Actor
+}
+
+' חבילה ימנית - DB (נמצאת מימין לקוד)
+package "Database (Physical Layer)" #F8F9FA {
+    class film << (T,#FFAAAA) >> {
+        film_id: PK
+        title
+    }
+    
+    class actor << (T,#FFAAAA) >> {
+        actor_id: PK
+        first_name
+    }
+
+    class film_actor << (T,#FFAAAA) >> {
+        film_id: PK, FK
+        actor_id: PK, FK
+    }
+
+    ' סידור פנימי בתוך ה-DB
+    film -[hidden]right- actor
+    film -- film_actor
+    actor -- film_actor
+}
+
+' חיבור ויזואלי בין החבילות כדי להכריח את ה-DB להיות מימין
+"Java Code (Logical Layer)" -[hidden]right-> "Database (Physical Layer)"
+
+@enduml

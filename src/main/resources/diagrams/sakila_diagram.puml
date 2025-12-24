@@ -1,0 +1,66 @@
+@startuml Sakila_Class_Diagram
+
+' --- הגדרות צבע לאייקונים בלבד ---
+skinparam classIconBackgroundColor #ADD1B2
+skinparam classIconBorderColor #3F7E5E
+skinparam shadowing true
+skinparam monochrome false
+
+package "Presentation Layer (Controllers & DTOs)" {
+    class FilmController <<RestController>> {
+        +getAllFilms(): List<FilmDTO>
+        +getFilmsByLanguage(lang: String): List<FilmDTO>
+    }
+
+    class FilmDTO <<Record>> {
+        +id: short
+        +title: String
+        +description: String
+        +languageName: String
+    }
+}
+
+package "Data Access Layer (Repositories)" {
+    interface FilmRepository <<Repository>> {
+        +findByLanguageName(lang: String): List<Film>
+    }
+}
+
+package "Domain Layer (Entities)" {
+    class Film <<Entity>> {
+        -film_id: short
+        -title: String
+        -description: String
+        --
+        <<Constructor>>
+        #Film()
+        +Film(title, language)
+    }
+
+    class Language <<Entity>> {
+        -language_id: Integer
+        -name: String
+    }
+
+    class Actor <<Entity>> {
+        -actor_id: Integer
+        -first_name: String
+        -last_name: String
+    }
+
+    class Category <<Entity>> {
+        -category_id: Integer
+        -name: String
+    }
+}
+
+' Relationships
+FilmController --> FilmRepository : @Autowired
+FilmRepository ..> Film : Manages
+FilmController ..> FilmDTO : Produces
+
+Film "many" -- "1" Language : language_id (FK)
+Film "many" -- "many" Actor : film_actor (Link Table)
+Film "many" -- "many" Category : film_category (Link Table)
+
+@enduml

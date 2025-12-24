@@ -1,0 +1,17 @@
+@startuml ManyToMany_Actors
+skinparam classIconBackgroundColor #ADD1B2
+skinparam classIconBorderColor #3F7E5E
+
+class Film {
+    -id: short
+    -title: String
+}
+
+class Actor {
+    -id: Integer
+    -firstName: String
+    -lastName: String
+}
+
+Film "m" -- "n" Actor : cast members < >
+@enduml
