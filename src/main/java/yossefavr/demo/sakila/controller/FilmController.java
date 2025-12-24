@@ -39,4 +39,16 @@ public class FilmController {
                         f.getLanguage().getName()))
                 .collect(Collectors.toList());
     }
+
+    @GetMapping("/films_optimized")
+    public List<FilmDTO> getAllFilmsOptimized() {
+        return filmRepo.findAllOptimized().stream()
+                .map(f -> new FilmDTO(
+                        f.getId(),
+                        f.getTitle(),
+                        f.getDescription(),
+                        f.getLanguage().getName()))
+                .collect(Collectors.toList());
+    }
+
 }

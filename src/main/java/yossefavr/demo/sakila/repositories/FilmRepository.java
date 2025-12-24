@@ -14,4 +14,8 @@ public interface FilmRepository extends JpaRepository<Film, Integer> {
     @Query("SELECT f FROM Film f WHERE f.language.name = :langName")
     List<Film> findByLanguageName(@Param("langName") String langName);
 
+    // הגרסה המהירה - שאילתה אחת עם JOIN FETCH
+    @Query("SELECT f FROM Film f JOIN FETCH f.language")
+    List<Film> findAllOptimized();
+
 }
